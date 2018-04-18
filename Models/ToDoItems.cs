@@ -64,6 +64,10 @@ namespace ToDoList.Models
     {
       return _id;
     }
+    public void DecrementId(int newId)
+    {
+      _id = newId - 1;
+    }
 
     public void Save()
     {

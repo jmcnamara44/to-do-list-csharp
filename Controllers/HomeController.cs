@@ -33,23 +33,17 @@ namespace ToDoList.Controllers
         int itemId = int.Parse((Request.Query["id"]));
         return View(allItems[itemId]);
       }
-      // [HttpGet("/")]
+
       [HttpPost("/update-submit")]
       public ActionResult UpdateSubmit()
       {
         List<ToDoItems> allItems = ToDoItems.GetAll();
         int itemId = int.Parse((Request.Form["id"]));
 
-
         allItems[itemId].SetTitle(Request.Form["title"]);
         allItems[itemId].SetDescription(Request.Form["description"]);
         allItems[itemId].SetDueDate(Request.Form["due-date"]);
         allItems[itemId].SetImportance(Request.Form["importance"]);
-        // ToDoItems toDoListItem = new ToDoItems(title, description, dueDate, importance);
-        // toDoListItem.Save();
-        //
-        // allItems.RemoveAt(itemId);
-
 
         return View("Index", allItems);
       }
@@ -74,6 +68,15 @@ namespace ToDoList.Controllers
         List<ToDoItems> allItems = ToDoItems.GetAll();
         int itemId = int.Parse((Request.Query["id"]));
         allItems.RemoveAt(itemId);
+        foreach (ToDoItems item in allItems)
+        {
+          if (item.GetId() > itemId)
+          {
+            item.DecrementId(item.GetId());
+          }
+        }
+
+
         return View("Index", allItems);
       }
 
