@@ -33,6 +33,7 @@ namespace ToDoList.Controllers
         int itemId = int.Parse((Request.Query["id"]));
         return View(allItems[itemId]);
       }
+      // [HttpGet("/")]
       [HttpPost("/update-submit")]
       public ActionResult UpdateSubmit()
       {
@@ -41,14 +42,13 @@ namespace ToDoList.Controllers
 
 
         allItems[itemId].SetTitle(Request.Form["title"]);
-        var title = (Request.Form["title"]);
-        var description = (Request.Form["description"]);
-        var dueDate = (Request.Form["due-date"]);
-        var importance = (Request.Form["importance"]);
-        ToDoItems toDoListItem = new ToDoItems(title, description, dueDate, importance);
-        toDoListItem.Save();
-
-        allItems.RemoveAt(itemId);
+        allItems[itemId].SetDescription(Request.Form["description"]);
+        allItems[itemId].SetDueDate(Request.Form["due-date"]);
+        allItems[itemId].SetImportance(Request.Form["importance"]);
+        // ToDoItems toDoListItem = new ToDoItems(title, description, dueDate, importance);
+        // toDoListItem.Save();
+        //
+        // allItems.RemoveAt(itemId);
 
 
         return View("Index", allItems);
